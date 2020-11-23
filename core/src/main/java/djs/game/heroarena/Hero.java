@@ -1,70 +1,41 @@
 package djs.game.heroarena;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import java.util.LinkedList;
-import java.util.List;
+import com.badlogic.gdx.math.GridPoint2;
 
-public class Hero extends Actor {
-    /*
+import java.util.Random;
+
+public class Hero {
+    public enum EHeroType{
+        WARRIOR,
+        MAGE,
+        PRIEST,
+        ROGUE,
+        HUNTER
+    }
+
     // variables
+    private EHeroType m_type;
     private int m_tile_x;
     private int m_tile_y;
-    private int m_block_size;
-    private TextureRegion m_block_texture_region;
-    private List<Vector2> m_last_positions;
+    private int m_hp_max;
+    private int m_hp_current;
 
     // methods
-    public Hero(int tile_x, int tile_y, int block_size){
-        Gdx.app.log(TAG, "Hero(" + tile_x + ", " + tile_y + ", " + block_size + ")");
-
-        this.setSize(block_size, block_size);
-        this.m_tile_x = tile_x;
-        this.m_tile_y = tile_y;
-        this.m_block_size = block_size;
-        this.setPosition(this.m_tile_x * this.m_block_size, this.m_tile_y * this.m_block_size);
-        this.m_block_texture_region = new TextureRegion(
-                new Texture(Gdx.files.internal("block.png"))
-        );
-
-        this.m_last_positions = new LinkedList<>();
+    public Hero(EHeroType type){
+        this.m_type = type;
+        this.m_tile_x = -1;
+        this.m_tile_y = -1;
+        this.m_hp_max = 100;
+        this.m_hp_current = 5;
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        // draw older positions
-        for (int i = 0; i < this.m_last_positions.size(); ++i){
-            Vector2 pos = this.m_last_positions.get(i);
-            float alpha = (0.5f / NUM_BLUR_COUNT) * (i + 1);
-            batch.setColor(0.0f, 0.0f, 1.0f, alpha);
-            batch.draw(this.m_block_texture_region, pos.x, pos.y, this.m_block_size, this.m_block_size);
-        }
-
-        // draw current
-        batch.setColor(0.0f, 0.0f, 1.0f, 1.0f);
-        batch.draw(this.m_block_texture_region, this.getX(), this.getY(), this.m_block_size, this.m_block_size);
-
-        // reset color
-        batch.setColor(Color.WHITE);
-
-        // super
-        super.draw(batch, parentAlpha);
-
-        // push current positions into last positions
-        this.m_last_positions.add(new Vector2(this.getX(), this.getY()));
-        if (this.m_last_positions.size() > NUM_BLUR_COUNT){
-            this.m_last_positions.remove(0);
-        }
+    public EHeroType get_type(){
+        return this.m_type;
     }
 
-    public void set_tile_position(int tile_x, int tile_y){
-        this.m_tile_x = tile_x;
-        this.m_tile_y = tile_y;
+    public void set_tile_position(int x, int y){
+        this.m_tile_x = x;
+        this.m_tile_y = y;
     }
 
     public int get_tile_x(){
@@ -74,5 +45,37 @@ public class Hero extends Actor {
     public int get_tile_y(){
         return this.m_tile_y;
     }
-    */
+
+    public void turn(Random rand, Arena arena){
+        // pick random direction
+        Misc.EDirection direction = Misc.EDirection.random(rand);
+        GridPoint2 dir = direction.to_grid_direction();
+
+        // determine the target tile position
+        int target_tile_x = this.m_tile_x + dir.x;
+        int target_tile_y = this.m_tile_y + dir.y;
+
+        // make sure position is valid
+        if (arena.is_tile_position_valid(target_tile_x, target_tile_y)) {
+            // make sure nothing there
+            Hero target_hero = arena.get_hero_at_tile_position(target_tile_x, target_tile_y);
+            if (target_hero == null) {
+                // empty so we can move there
+                this.move(target_tile_x, target_tile_y);
+            }
+        }
+    }
+
+    public int get_hp_max(){
+        return this.m_hp_max;
+    }
+
+    public int get_hp_current(){
+        return this.m_hp_current;
+    }
+
+    private void move(int tile_x, int tile_y){
+        this.m_tile_x = tile_x;
+        this.m_tile_y = tile_y;
+    }
 }

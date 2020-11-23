@@ -49,4 +49,20 @@ public class Tilemap {
     public TilemapTile get_tile(int x, int y){
         return this.m_tiles[x][y];
     }
+
+    public boolean is_tile_position_valid(int tile_x, int tile_y){
+        if (tile_x < 0){
+            return false;
+        }
+        if (tile_x > this.m_width - 1){
+            return false;
+        }
+        if (tile_y < 0){
+            return false;
+        }
+        if (tile_y > this.m_height - 1){
+            return false;
+        }
+        return true;
+    }
 }

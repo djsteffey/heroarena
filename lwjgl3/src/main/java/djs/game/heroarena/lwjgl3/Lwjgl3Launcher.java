@@ -3,7 +3,6 @@ package djs.game.heroarena.lwjgl3;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
-import djs.game.heroarena.Hero;
 import djs.game.heroarena.HeroArenaGame;
 
 /** Launches the desktop (LWJGL3) application. */
