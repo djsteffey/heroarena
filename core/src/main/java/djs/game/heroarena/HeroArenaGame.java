@@ -13,6 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import djs.game.heroarena.hero.HeroData;
+import djs.game.heroarena.hero.TeamData;
 
 public class HeroArenaGame extends Game implements IGameServices {
 	// variables
@@ -31,7 +37,32 @@ public class HeroArenaGame extends Game implements IGameServices {
 		this.load_assets();
 
 		// setup the screen
-		this.set_next_screen(new ScreenPlay(this));
+		Random random = new Random();
+		List<TeamData> teams = new ArrayList<>();
+
+		TeamData team = new TeamData();
+		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
+		teams.add(team);
+
+		team = new TeamData();
+		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
+		teams.add(team);
+		this.set_next_screen(
+				new ScreenBattle(
+						this,
+						teams
+				)
+		);
 	}
 
 	@Override
@@ -51,6 +82,8 @@ public class HeroArenaGame extends Game implements IGameServices {
 		this.m_asset_manager.load("entities_24x24.png", Texture.class);
 		this.m_asset_manager.load("tiles_24x24.png", Texture.class);
 		this.m_asset_manager.load("pixel.png", Texture.class);
+		this.m_asset_manager.load("hero_circle.png", Texture.class);
+		this.m_asset_manager.load("hero_level_circle.png", Texture.class);
 
 		// load the ui skin
 		this.m_asset_manager.load("ui/skin.atlas", TextureAtlas.class);
@@ -75,6 +108,7 @@ public class HeroArenaGame extends Game implements IGameServices {
 		// set default fonts to size 24 of this ttf
 		skin.get(TextButton.TextButtonStyle.class).font = skin.getFont("font-32");
 		skin.get(Label.LabelStyle.class).font = skin.getFont("font-48");
+		skin.get("smaller", Label.LabelStyle.class).font = skin.getFont("font-24");
 		skin.get("small", Label.LabelStyle.class).font = skin.getFont("font-32");
 		skin.get("medium", Label.LabelStyle.class).font = skin.getFont("font-48");
 		skin.get("large", Label.LabelStyle.class).font = skin.getFont("font-64");

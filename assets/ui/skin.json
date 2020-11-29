@@ -116,6 +116,7 @@
   com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
     default: { font: default, fontColor: font },
     white: { font: default, fontColor: white },
+    smaller: { font: default, fontColor: white },
     small: { font: default, fontColor: white },
     medium: { font: default, fontColor: white },
     large: { font: default, fontColor: white }
