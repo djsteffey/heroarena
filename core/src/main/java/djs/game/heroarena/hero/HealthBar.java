@@ -14,7 +14,7 @@ public class HealthBar extends Group {
     private Image m_foreground;
 
     // methods
-    public HealthBar(AssetManager am, int width, int height) {
+    public HealthBar(AssetManager am, float width, float height) {
         // size
         this.m_border_size = 2.0f;
         this.setSize(width, height);

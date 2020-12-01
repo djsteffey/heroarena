@@ -41,22 +41,17 @@ public class HeroArenaGame extends Game implements IGameServices {
 		List<TeamData> teams = new ArrayList<>();
 
 		TeamData team = new TeamData();
-		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.random(random)));
+		team.add_hero(new HeroData(HeroData.EHeroType.random(random)));
+		teams.add(team);
+
+		team = new TeamData();
 		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
 		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
 		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
 		teams.add(team);
 
-		team = new TeamData();
-		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.MAGE));//random(random)));
-		teams.add(team);
 		this.set_next_screen(
 				new ScreenBattle(
 						this,

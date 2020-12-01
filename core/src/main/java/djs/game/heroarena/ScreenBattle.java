@@ -8,11 +8,13 @@ import java.util.Random;
 import djs.game.heroarena.hero.BattleHero;
 import djs.game.heroarena.hero.HeroData;
 import djs.game.heroarena.hero.TeamData;
+import djs.game.heroarena.ui.UIBattleHeroStatus;
 
 public class ScreenBattle extends ScreenAbstract{
     // variables
     private Random m_random;
-    private List<BattleHero> m_battle_heroes;
+    private List<List<BattleHero>> m_battle_heroes;
+    private List<List<UIBattleHeroStatus>> m_battle_hero_status;
 
     // methods
     public ScreenBattle(IGameServices game_services, List<TeamData> teams_data) {
@@ -21,65 +23,42 @@ public class ScreenBattle extends ScreenAbstract{
         // rand
         this.m_random = new Random();
 
-        // create the battle heroes
+        // tileset for battle heroes
         Tileset hero_tileset = new Tileset(
                 game_services.get_asset_manager(),
                 "entities_24x24.png",
                 24
         );
+
+        // create the battle heroes and status
         this.m_battle_heroes = new ArrayList<>();
-        int hero_size = 24*5;
+        this.m_battle_hero_status = new ArrayList<>();
+        for (int i = 0; i < teams_data.size(); ++i){
+            List<BattleHero> bhl = new ArrayList<>();
+            List<UIBattleHeroStatus> bhs = new ArrayList<>();
+            for (int j = 0; j < teams_data.get(i).get_heroes().size(); ++j){
+                bhl.add(new BattleHero(teams_data.get(i).get_heroes().get(j), hero_tileset));
+                bhs.add(new UIBattleHeroStatus(game_services.get_asset_manager(), bhl.get(j)));
+            }
+            this.m_battle_heroes.add(bhl);
+            this.m_battle_hero_status.add(bhs);
+        }
 
-        // team 0
-        TeamData team = teams_data.get(0);
-        BattleHero bh = new BattleHero(team.get_heroes().get(0), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(144, 912, Align.center);
-        this.m_stage.addActor(bh);
-        bh = new BattleHero(team.get_heroes().get(1), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(360, 912, Align.center);
-        this.m_stage.addActor(bh);
-        bh = new BattleHero(team.get_heroes().get(2), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(576, 912, Align.center);
-        this.m_stage.addActor(bh);
-        bh = new BattleHero(team.get_heroes().get(3), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(144, 1096, Align.center);
-        this.m_stage.addActor(bh);
-        bh = new BattleHero(team.get_heroes().get(4), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(360, 1096, Align.center);
-        this.m_stage.addActor(bh);
-        bh = new BattleHero(team.get_heroes().get(5), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(576, 1096, Align.center);
-        this.m_stage.addActor(bh);
-
-        // team 1
-        team = teams_data.get(1);
-        bh = new BattleHero(team.get_heroes().get(0), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(144, 634, Align.center);
-        this.m_stage.addActor(bh);
-        bh = new BattleHero(team.get_heroes().get(1), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(360, 634, Align.center);
-        this.m_stage.addActor(bh);
-        bh = new BattleHero(team.get_heroes().get(2), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(576, 634, Align.center);
-        this.m_stage.addActor(bh);
-        bh = new BattleHero(team.get_heroes().get(3), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(144, 450, Align.center);
-        this.m_stage.addActor(bh);
-        bh = new BattleHero(team.get_heroes().get(4), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(360, 450, Align.center);
-        this.m_stage.addActor(bh);
-        bh = new BattleHero(team.get_heroes().get(5), game_services.get_asset_manager(), hero_tileset);
-        bh.setPosition(576, 450, Align.center);
-        this.m_stage.addActor(bh);
+        // team specific setup
+        this.m_battle_heroes.get(0).get(0).setPosition(720 * 0.20f, 900, Align.center);
+        this.m_battle_heroes.get(1).get(0).setPosition(720 * 0.80f, 900, Align.center);
+        this.m_battle_heroes.get(0).get(0).flip(true);
+        this.m_battle_heroes.get(1).get(0).flip(false);
+        this.m_battle_hero_status.get(0).get(0).setPosition(8, 1280 - 8 - this.m_battle_hero_status.get(0).get(0).getHeight());
+        this.m_battle_hero_status.get(1).get(0).setPosition(720 - 8 - this.m_battle_hero_status.get(1).get(0).getWidth(), 1280 - 8 - this.m_battle_hero_status.get(1).get(0).getHeight());
+        this.m_stage.addActor(this.m_battle_heroes.get(0).get(0));
+        this.m_stage.addActor(this.m_battle_heroes.get(1).get(0));
+        this.m_stage.addActor(this.m_battle_hero_status.get(0).get(0));
+        this.m_stage.addActor(this.m_battle_hero_status.get(1).get(0));
     }
 
     @Override
     public void render(float delta) {
-        // do the ai for all the battle heroes
-        for (BattleHero hero : this.m_battle_heroes){
-            hero.ai(this.m_battle_heroes);
-        }
-
         // super
         super.render(delta);
     }
