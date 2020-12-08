@@ -28,8 +28,6 @@ public class BattleHero extends Group {
             default: { this.m_hero_sprite = new Sprite(tileset.get_texture_region(20 * 21 + 1)); } break;
         }
         this.m_hero_sprite.setSize(this.getWidth(), this.getHeight());
-
-        this.debugAll();
     }
 
     @Override
@@ -46,5 +44,9 @@ public class BattleHero extends Group {
 
     public void flip(boolean flip){
         this.m_hero_sprite.setFlip(flip, false);
+    }
+
+    public HeroData get_hero_data(){
+        return this.m_hero_data;
     }
 }

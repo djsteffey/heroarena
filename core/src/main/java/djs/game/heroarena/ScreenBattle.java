@@ -1,5 +1,6 @@
 package djs.game.heroarena;
 
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Random;
 import djs.game.heroarena.hero.BattleHero;
 import djs.game.heroarena.hero.HeroData;
 import djs.game.heroarena.hero.TeamData;
+import djs.game.heroarena.ui.UIAbilitySelector;
 import djs.game.heroarena.ui.UIBattleHeroStatus;
 
 public class ScreenBattle extends ScreenAbstract{
@@ -44,17 +46,37 @@ public class ScreenBattle extends ScreenAbstract{
             this.m_battle_hero_status.add(bhs);
         }
 
-        // team specific setup
-        this.m_battle_heroes.get(0).get(0).setPosition(720 * 0.20f, 900, Align.center);
-        this.m_battle_heroes.get(1).get(0).setPosition(720 * 0.80f, 900, Align.center);
+        // team 0 positioning
+        this.m_battle_heroes.get(0).get(0).setPosition(720 * 0.20f, 1280 * 0.65f, Align.center);
         this.m_battle_heroes.get(0).get(0).flip(true);
-        this.m_battle_heroes.get(1).get(0).flip(false);
         this.m_battle_hero_status.get(0).get(0).setPosition(8, 1280 - 8 - this.m_battle_hero_status.get(0).get(0).getHeight());
+
+        this.m_battle_heroes.get(1).get(0).setPosition(720 * 0.80f, 1280 * 0.65f, Align.center);
+        this.m_battle_heroes.get(1).get(0).flip(false);
         this.m_battle_hero_status.get(1).get(0).setPosition(720 - 8 - this.m_battle_hero_status.get(1).get(0).getWidth(), 1280 - 8 - this.m_battle_hero_status.get(1).get(0).getHeight());
+
+        // add them all
         this.m_stage.addActor(this.m_battle_heroes.get(0).get(0));
         this.m_stage.addActor(this.m_battle_heroes.get(1).get(0));
         this.m_stage.addActor(this.m_battle_hero_status.get(0).get(0));
         this.m_stage.addActor(this.m_battle_hero_status.get(1).get(0));
+
+        // ability buttons
+        UIAbilitySelector as = new UIAbilitySelector(
+                game_services.get_asset_manager(),
+                this.m_battle_heroes.get(0).get(0)
+        );
+        as.setPosition(720 * 0.23f, 1280 * 0.50f, Align.center);
+        this.m_stage.addActor(as);
+
+        as = new UIAbilitySelector(
+                game_services.get_asset_manager(),
+                this.m_battle_heroes.get(1).get(0)
+        );
+        as.setPosition(720 * 0.77f, 1280 * 0.50f, Align.center);
+        this.m_stage.addActor(as);
+
+//        this.m_stage.setDebugAll(true);
     }
 
     @Override

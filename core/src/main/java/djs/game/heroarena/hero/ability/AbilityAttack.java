@@ -1,4 +1,4 @@
-package djs.game.heroarena.ability;
+package djs.game.heroarena.hero.ability;
 
 import djs.game.heroarena.hero.HeroData;
 import djs.game.heroarena.hero.TeamData;
@@ -9,7 +9,7 @@ public class AbilityAttack extends Ability{
 
     // methods
     public AbilityAttack(HeroData owner){
-        super(owner, "Attack", 0);
+        super(owner, "Attack", 0, "ability/attack.png");
     }
 
     @Override

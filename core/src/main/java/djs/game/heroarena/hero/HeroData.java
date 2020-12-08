@@ -3,9 +3,9 @@ package djs.game.heroarena.hero;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import djs.game.heroarena.ability.Ability;
-import djs.game.heroarena.ability.AbilityAttack;
-import djs.game.heroarena.ability.AbilityHeal;
+import djs.game.heroarena.hero.ability.Ability;
+import djs.game.heroarena.hero.ability.AbilityAttack;
+import djs.game.heroarena.hero.ability.AbilityHeal;
 
 public class HeroData {
     public enum EHeroType{
@@ -32,7 +32,7 @@ public class HeroData {
 
         this.m_abilities.add(new AbilityAttack(this));
         this.m_abilities.add(new AbilityHeal(this));
-
+        this.m_abilities.add(null);
     }
 
     public EHeroType get_type(){
@@ -45,5 +45,9 @@ public class HeroData {
 
     public int get_hp_current(){
         return this.m_hp_current;
+    }
+
+    public List<Ability> get_abilities(){
+        return this.m_abilities;
     }
 }
