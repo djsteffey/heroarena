@@ -11,7 +11,6 @@ public abstract class Ability {
     private int m_cooldown_remaining;
     private String m_icon_filename;
 
-
     // methods
     public Ability(HeroData owner, String name, int cooldown, String icon_filename){
         this.m_owner = owner;

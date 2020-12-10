@@ -1,14 +1,15 @@
 package djs.game.heroarena;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Align;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import djs.game.heroarena.hero.BattleHero;
-import djs.game.heroarena.hero.HeroData;
 import djs.game.heroarena.hero.TeamData;
+import djs.game.heroarena.hero.ability.Ability;
+import djs.game.heroarena.ui.UIAbilityButton;
 import djs.game.heroarena.ui.UIAbilitySelector;
 import djs.game.heroarena.ui.UIBattleHeroStatus;
 
@@ -64,16 +65,31 @@ public class ScreenBattle extends ScreenAbstract{
         // ability buttons
         UIAbilitySelector as = new UIAbilitySelector(
                 game_services.get_asset_manager(),
-                this.m_battle_heroes.get(0).get(0)
+                this.m_battle_heroes.get(0).get(0),
+                new UIAbilitySelector.UIAbilitySelectorListener() {
+                    @Override
+                    public void on_ability_selected(UIAbilitySelector selector, UIAbilityButton button, Ability ability) {
+                        Gdx.app.log("ScreenBattle", ability.toString());
+                        ability.execute(null, null);
+                    }
+                }
         );
         as.setPosition(720 * 0.23f, 1280 * 0.50f, Align.center);
         this.m_stage.addActor(as);
 
         as = new UIAbilitySelector(
                 game_services.get_asset_manager(),
-                this.m_battle_heroes.get(1).get(0)
+                this.m_battle_heroes.get(1).get(0),
+                new UIAbilitySelector.UIAbilitySelectorListener() {
+                    @Override
+                    public void on_ability_selected(UIAbilitySelector selector, UIAbilityButton button, Ability ability) {
+                        Gdx.app.log("ScreenBattle", ability.toString());
+                    }
+                }
         );
         as.setPosition(720 * 0.77f, 1280 * 0.50f, Align.center);
+        as.set_touchable_all(Touchable.disabled);
+        as.set_enable_all(false);
         this.m_stage.addActor(as);
 
 //        this.m_stage.setDebugAll(true);
