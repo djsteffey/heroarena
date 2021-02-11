@@ -24,7 +24,7 @@ public class Tileset {
         }
     }
 
-    public TextureRegion get_texture_region(int index){
+    public TextureRegion getTextureRegion(int index){
         return this.m_regions.get(index);
     }
 }

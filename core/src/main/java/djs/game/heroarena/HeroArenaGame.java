@@ -13,12 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import djs.game.heroarena.battle.ScreenBattle;
 
-import djs.game.heroarena.hero.HeroData;
-import djs.game.heroarena.hero.TeamData;
 
 public class HeroArenaGame extends Game implements IGameServices {
 	// variables
@@ -37,25 +33,9 @@ public class HeroArenaGame extends Game implements IGameServices {
 		this.load_assets();
 
 		// setup the screen
-		Random random = new Random();
-		List<TeamData> teams = new ArrayList<>();
-
-		TeamData team = new TeamData();
-		team.add_hero(new HeroData(HeroData.EHeroType.random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.random(random)));
-		teams.add(team);
-
-		team = new TeamData();
-		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
-		team.add_hero(new HeroData(HeroData.EHeroType.WARRIOR));//random(random)));
-		teams.add(team);
-
 		this.set_next_screen(
 				new ScreenBattle(
-						this,
-						teams
+						this
 				)
 		);
 	}

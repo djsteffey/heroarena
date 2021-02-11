@@ -2,52 +2,42 @@ package djs.game.heroarena.hero;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import djs.game.heroarena.hero.ability.Ability;
-import djs.game.heroarena.hero.ability.AbilityAttack;
-import djs.game.heroarena.hero.ability.AbilityHeal;
+
+import djs.game.heroarena.ability.Ability;
 
 public class HeroData {
-    public enum EHeroType{
-        WARRIOR, MAGE, PRIEST, ROGUE, HUNTER;
-        public static EHeroType random(Random rand){
-            return EHeroType.values()[rand.nextInt(EHeroType.values().length)];
-        }
-    }
-
     // variables
-    private EHeroType m_hero_type;
-    private int m_hp_max;
-    private int m_hp_current;
-    private int m_speed;
+    private int m_graphics_id;
+    private int m_tile_x;
+    private int m_tile_y;
     private List<Ability> m_abilities;
 
     // methods
-    public HeroData(EHeroType type){
-        this.m_hero_type = type;
-        this.m_hp_max = 100;
-        this.m_hp_current = 65;
-        this.m_speed = 5;
+    public HeroData(int graphics_id){
+        this.m_graphics_id = graphics_id;
+        this.m_tile_x = -1;
+        this.m_tile_y = -1;
         this.m_abilities = new ArrayList<>();
-
-        this.m_abilities.add(new AbilityAttack(this));
-        this.m_abilities.add(new AbilityHeal(this));
-        this.m_abilities.add(null);
     }
 
-    public EHeroType get_type(){
-        return this.m_hero_type;
+    public int getGraphicsId(){
+        return this.m_graphics_id;
     }
 
-    public int get_hp_max(){
-        return this.m_hp_max;
+    public int getTileLocationX(){
+        return this.m_tile_x;
     }
 
-    public int get_hp_current(){
-        return this.m_hp_current;
+    public int getTileLocationY(){
+        return this.m_tile_y;
     }
 
-    public List<Ability> get_abilities(){
+    public void setTileLocation(int tile_x, int tile_y){
+        this.m_tile_x = tile_x;
+        this.m_tile_y = tile_y;
+    }
+
+    public List<Ability> getAbilities(){
         return this.m_abilities;
     }
 }

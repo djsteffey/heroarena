@@ -10,8 +10,8 @@ public class Lwjgl3Launcher {
 	public static void main(String[] args) {
 		Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
 		configuration.setTitle("HeroArena");
-		configuration.setWindowedMode(720 / 2, 1280 / 2);
-		configuration.setWindowPosition(2200, 100);
+		configuration.setWindowedMode(1280 / 1, 720 / 1);
+		configuration.setWindowPosition(200, 100);
 		configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
 
 		HeroArenaGame game = new HeroArenaGame();

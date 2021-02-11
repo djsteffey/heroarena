@@ -14,7 +14,7 @@ public abstract class ScreenAbstract implements Screen {
     // methods
     public ScreenAbstract(IGameServices game_services){
         this.m_game_services = game_services;
-        this.m_stage = new Stage(new FitViewport(720, 1280));
+        this.m_stage = new Stage(new FitViewport(1280, 720));
     }
 
     @Override
